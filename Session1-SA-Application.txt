@@ -1,0 +1,71 @@
+Movies 
+
+ Video Player: get software , install , run the software
+ 
+Desktop or Laptop
+
+
+Book Movie tickets :
+
+  open your laptop -> browser -> search the website --> book your ticket 
+ 
+ 
+ 
+Types of Application:
+
+1. Desktop Application 
+Desktop applications are software programs run locally on computer devices. They aren’t accessible from a browser, like web-based apps, and require deployment on a personal computer or laptop.
+https://whatfix.com/blog/desktop-application/
+
+
+2. Web Application 
+   Static -> HTML, Javascript, CSS
+   Dynamic ->
+   
+   https://www.geeksforgeeks.org/difference-between-static-and-dynamic-web-pages/
+   
+3. Mobile Application
+
+Multier Application Architecture:
+	3 tier: 
+	Presentation Layer
+	Logic Layer
+	Data Layer
+	
+	2 tier:
+https://www.guru99.com/n-tier-architecture-system-concepts-tips.html
+
+Monolithic vs Microservice
+https://www.atlassian.com/microservices/microservices-architecture/microservices-vs-monolith
+
+https://www.geeksforgeeks.org/monolithic-vs-microservices-architecture/
+
+
+
+
+Traditional Approach: 
+ 
+ Waterfall Model:
+ 
+ Requirement -> Design -> Implementation -> Testing -> Deployment -> Maintenance
+
+Current Approach: 
+
+ Agile Method: 
+ 
+ Requirement Anlysis -> design -> implementation ->testing -> Deployment -> Requirement Analysis
+
+
+Scripting Language(do not required compilation)
+  JSON
+  YAML
+  Shell
+  
+  
+  
+  Niladri -> trainer name is, place name is ,
+
+  grocery 
+  
+  
+  compile -> build -> war or jar -> deploy the same in server

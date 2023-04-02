@@ -1,0 +1,63 @@
+10.20.30.40 -> Flipkart
+
+10.20.30.50 -> Amazon
+
+000.000.000.000 --> Smallest
+
+255.255.255.255 --> Largest
+
+
+0-255.0-255.0-255.0-255
+
+++++++++++++++++++++++++++++++++
+Frontend Layer: Html,Javascript,Css . Angular, ReactJS
+
+Business logic layer: Java, Python, C# - Spring
+
+DB: 
+
+RDBMS: 
+
+Relation Database Management System(SQL): MSSQL, MySql, Postgre SQL, 
+
+NOSQL : Mongo db
+
+Normalization 
+++++++++++++++++++++++++++++++++
+
+Developer -> Unit testing,-> QA -> System Testing, User acceptance testing ---> Dynamic Testing --> Release -> production  
+
+
+Java:
+
+a = 3
+
+b = 4
+
+a + b = 7 
+
+register 3 
+
+register 4 
+
+0 and 1 
+++++++++++++++++++
+
+Highlevel programing language Java , Object oriented , secure.
+
+Called oak after James Gosling and his team changed the name to Java 
+
+1995 by Sun Microsystems
+
+.java 
+
+
+println (" Hello Start agile")
+
+a  = 3 
+
+b = 4 
+
+Sum = a + b =7
+
+ 

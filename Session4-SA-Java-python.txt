@@ -1,0 +1,33 @@
+Procedural programming
+
+OOPs -> Object oriented programming
+
+oops is faster 
+
+1. Classes
+2. objects
+3. inheritance
+4. polymorphism
+5. encapsulation
+6. abstraction
+7. interface
+
+
+https://github.com/niladrimondal/inheritanceandaccessmodifier
+
+https://github.com/niladrimondal/calculator
+
+Python:
+OOP language
+
+
+https://www.python.org/ftp/python/3.11.3/python-3.11.3-amd64.exe
+
+pycharm, vs code, Anaconda
+
+we need to define the scope using identations 
+
+compilation and interpretation/execution is not seperate process
+
+python is called as interpreter language
+

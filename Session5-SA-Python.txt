@@ -1,0 +1,100 @@
+class Calculator:
+    def __init__(self,num1,num2):
+        self.a = num1
+        self.b = num2
+
+
+    def sum(self):
+        return self.a + self.b
+    
+print('Enter the First Number')
+num1 = int(input())
+
+print('Enter the secone nuber')
+num2 = int(input())
+
+calc = Calculator(num1,num2)
+
+print('sum of the two number is:')
+print(calc.sum())
+
+++++++++++++++++++++++
+
+pip - Python Package Manager
+
+flask- web application framework
+
+WSGI - Web Server Gateway Interface
+
+API - application programming interface
++++++++++++++++++++++
+Sample Flask Application:https://www.javatpoint.com/first-flask-application
+
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def defaultPage():
+    return 'Welcome to the Flask Default Page'
+
+@app.route('/createproduct')
+def createProduct():
+    return 'Your Item is added to the cart'
+
+
+@app.route('/deleteproduct')
+def deleteProduct():
+    return 'your Item has been removed from the cart'
+
+if __name__  == '__main__':
+    app.run()
+	
+	
+___________________________________________________________________
+RDBMS: Relational database management system
+
+mysql, oracle, mssql, prosgreesql,aurora
+Employee:
+EMP id, Name, Surname, Phn number, address, age, sex, emailid
+
+
+product:
+id, name , quantity
+select name from procuct where quantity=3
+
+
+dynamodb,mongodb,
+
+application/login?username='xyz'&&passowrod='pwd'
+
+
+emloyeed teble
+
+where username.xyz = employee.name.xyz
+
+CRUD: create Read update  delete
+
+Database: 
+
+	tables:
+		fields
+			records
+			
+Some of The Most Important SQL Commands
+SELECT - extracts data from a database
+UPDATE - updates data in a database
+DELETE - deletes data from a database
+INSERT INTO - inserts new data into a database
+CREATE DATABASE - creates a new database
+ALTER DATABASE - modifies a database
+CREATE TABLE - creates a new table
+ALTER TABLE - modifies a table
+DROP TABLE - deletes a table
+CREATE INDEX - creates an index (search key)
+DROP INDEX - deletes an index
+
+AND and or
+
+mysql workbench: oracle
+mysql server:mysql-installer-community-8.0.32.0

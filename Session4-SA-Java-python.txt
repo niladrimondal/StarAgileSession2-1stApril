@@ -31,3 +31,8 @@ compilation and interpretation/execution is not seperate process
 
 python is called as interpreter language
 
+file.py
+
+file.pyc
+
+python virtual Machine

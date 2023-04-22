@@ -1,0 +1,40 @@
+Cloud Computing 
+
+Benifits of the cloud 
+
+what is region and Az's (availability Zones)
+
+Different types of cloud:
+1. Public Cloud 
+2. Private Cloud
+3. Hybrid Cloud 
+4. Community Cloud
+
+Public Cloud:
+
+AWS: Amazon Web Services (Aws Console, AWS CLI, SDK, Powershell)
+IAM: Identity and Access Management
+EC2: Elastic Compute Cloud
+S3
+RDS
+EKS
+ECR
+VPC
+
+Microsoft Azure 
+GCP : Google Cloud Platform 
+
+Types Of Service Models
+IaaS : Infrastructure as a service
+PaaS: Platform as a Services
+SaaS: Software as a Service
+DaaS
+
+IP:
+
+11111111.11111111.11111111.11111111
+76543210
+10.10.10.0
+
+
+Launch A AWS Windows VM

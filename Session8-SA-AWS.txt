@@ -1,0 +1,21 @@
+S3 Storage Classes
+
+S3 Standard	
+S3 -Tiering*
+S3 Standard-IA
+S3 One Zone-IA†
+S3 Glacier Instant Retrieval
+S3 Glacier Flexible Retrieval	
+S3 Glacier Deep Archive
+
+RDS:
+
+Aurora
+Mysql
+Postgree
+Mariadb
+MSSQL
+Oracle
+
+vpc:
+

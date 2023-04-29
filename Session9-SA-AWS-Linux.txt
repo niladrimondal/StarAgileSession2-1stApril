@@ -1,0 +1,43 @@
+RDS:
+
+we have seen how to launch a RDS MySql instance 
+
+we will connect the same using a client mysql workbench 
+
+ELB: Elastic Load balacer
+
+Application Loadbalancer
+
+Network Loadbalancer
+
+Gateway Loadbalancer
+
+classic Loadbalacer
+
+Auto Scaling:
+
+
+Cloud front: CDN 
+
+Edge Locations: 
+
+EKS: Elastic Kubernetes Service. Used for Microservices . Orchstration tool as a service.
+
+ECR: Elastic Container registry
+
+Linux Architecture:
+
+Application
+Shell
+Kernel
+Hardware
+
+Kernel can help us with the below tasks:
+
+Resource Allocation
+Security Management
+Process Management
+Scheduling:Preemptive and Non-Preemtive
+Device Management
+Scheduling
+Memory Mangement  

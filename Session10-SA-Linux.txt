@@ -1,0 +1,38 @@
+
+ssh -i ./ubuntukey.pem ubuntu@3.83.242.137
+
+mv rename 
+
+mv to move a file in different location
+
+-r Recursive delete
+-f Force Delete a directory 
+
+
+chmod : change the permission of a file
+
+d rwx rwx r-x 2 ubuntu ubuntu 4096 Apr 30 06:06 niladri
+- rw- rw- r-- 1 ubuntu ubuntu   62 Apr 30 05:20 staragiledevops
+-r--r--r-- 1 ubuntu ubuntu   62 Apr 30 05:20 staragiledevops
+-rwxrwxrwx 
+
+---------- : -/d (wherther it is a file or directory) 
+
+--- : rwx : r:4, w:2, x:1
+
+111: 7 (2^2*1, 2^1*1, 2^0*1) 4+2+1 = 7  
+210 
+
+101: 4+0+1 = 5 
+210
+
+r - 4
+w - 2
+x - 1
+
+rwx      rwx       r-x
+Ownwer   Group     other
+
+chmod 4 4 4 filename   
+
+chown : change the ownership of a file

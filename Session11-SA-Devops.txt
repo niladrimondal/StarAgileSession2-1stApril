@@ -1,0 +1,52 @@
+SDLC: Software development life cycle
+
+SDLC Models:
+Waterfall Model
+RAD Model
+Spiral Model
+Agile Model: Requirement-> Deployment is going to happen Sprint(2W) by Sprint ()
+Sprint 1: Feature 1 and Feature 3. 
+Sprnit 2: Feature 2 and Feature 4.
+
+Waterfall Model
+
+200
+
+AGile 70 Developer
+
+agile + devops 
+
+F1 is getting develop -> 10 tasks
+
+Day 1 -> 2 Tasks-> Automation tools(jenkins, Azure Devops, Git Work flow) which will help us to take the code(SCM) -> Build -> testing-> Deploy 
+
+Another challegnes : 
+Developer: Java Application 
+Operation Team: Cloud environment  
+
+
+
+10 members - 4 Developer, 1 ux designer, 1 scrum master, 2 Ops enginner , 2 tester
+
+Epic -> Features-> User Stories -> Tasks
+
+backlog : F1 and F2 F4 F3
+
+Sprint 1 : F1 and F2 
+
+
+V-Model
+How we start SDLC
+
+
+CICD: Continuous Integration and Continuous Deployment (Jenkins)
+
+DevSecOps : SAST and DAst 
+
+Gitops: ArgoCD (OrchASTRATION TOOL : k8s)
+
+backened.example.com/api/userlogin
+backened.example.com/api/userresgistration
+backened.example.com/auth/
+
+forntend.com/userlogin --> backened.example.com/api/userlogin

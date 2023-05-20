@@ -1,0 +1,64 @@
+SCM : Source Code Management
+
+Benefits:
+Version Control
+Backup
+Collaborations
+Generating Release node
+
+Version Control System:
+
+Centralized 
+Distributed
+
+Pull Request: PR
+
+
+SCM (Purpose)
+1.	Track the modification to a source code repository.
+2.	Maintain all the history. it will also  help us to resolve the conflict
+3.	Version control
+Benefit:
+1.	Backup of the code
+2.	Version history
+3.	Generate release note.
+4.	Work together in teams
+Source code Management tools:
+1.	Git 
+2.	Bitbucket
+3.	Subversion 
+4.	Gitlab
+5.	Github
+What is Git:
+Git is a version control system for tracking changes in computer files.
+
+Github: Web based git repositories
+
+Bitbucket: 
+Gitlab
+
+
+
+
+create folder
+
+#intialize the git
+
+git init
+
+#Add the Staging
+git add .
+
+#check the status
+git status
+
+#remove the file from stage location
+git rm --cached file2 
+
+#commit to local repo
+git commit -m ""
+
+#one time setup after git installation
+git config --global user.email "niladrisankarmondal.mondal@gmail.com"
+
+git config --global user.name "NiladriSMondal"

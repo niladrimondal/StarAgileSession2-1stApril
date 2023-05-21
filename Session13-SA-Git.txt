@@ -1,0 +1,129 @@
+Create remote repository and add the same with your local repository
+
+
+
+.gitignorefile
+
+git remote set-url origin <remoteurl>
+
+++++++++++++++++++++++++++++++
+
+
+#create git hub account
+
+#add the origin in the local repository
+
+git remote add origin <<git repo links>>
+
+#push your local repo changes to remote repo
+git push -u origin master
+++++++++++++++++++++++++++
+
+add .gitignorefile
+
+add some file pattern to ignore the same 
+
+++++++++++++++++++++
+#check the commit log
+git log --oneline
+#check the commit log graph mode
+git log --oneline --graph
+
+++++++++++++++++++++++
+
+#if changes are there in remote repo
+
+git pull origin <branchname>
+
+
++++++++++++++++++++++++++++++++++
+#to clone a repository
+git clone <remote repo url>
+
++++++++++++++++
+#create branch name
+git branch <branch name>
+
+++++++++++++++++++++++
+#to create a fork
+fork the url https://github.com/GithubResources1/Source-repository.git from github
+
+#clone the fork repo
+git clone [the copied HTTPS URL]
+
+#check the remote url
+git remote -v
+
+#add remote original for upstream to create a pull request
+git remote add upstream https://github.com/GithubResources1/Source-repository.git
+ 
+git remote -v
+ 
+#make changes and push
+git push
+ 
+create a pull request from github url
++++++++++++++++++++++++++++++
+#create git branch 
+git branch new_branch
+
+#rename git branch
+git branch -m new_branch1
+ 
+#delete git branch 
+git branch -d new_branch
+ 
+++++++++++
+#move to another branch
+git checkout branchname
+git switch branchname
+
+#create and move to new branch 
+ git branch -b <new branch>
+ git branch -c <new branch>
+#merge the changes to the branch 
+git merge <branch name>
+ 
+#revert your commit id 
+ git revert <commit id>
+ 
+++++++++++++++++++++++++
+Stashing your work
+The git stash command takes your uncommitted changes (both staged and unstaged), saves them away for later use, and then reverts them from your working copy.
+git stash 
+Re-applying your stashed changes
+git stash pop
+
+++++++++++++++++++++
+git rebase <branchname>
+
+++++++++++
+git reset <option> <commit-sha> 
+These options can be
+
+--soft
+--mixed
+--Hard
+++++++++++++++++++++++++
+download kdiff3 for mergetool and difftool
+
+https://sourceforge.net/projects/kdiff3/
+
+https://stackoverflow.com/questions/33308482/how-can-i-configure-kdiff3-as-a-merge-tool-and-diff-tool-for-git
+
+https://git-scm.com/docs/git-mergetool
+
+https://git-scm.com/docs/git-difftool#git-difftool---no-trust-exit-code
+
+
+git config --global merge.tool kdiff3
+git config --global mergetool.kdiff3.path "C:/Program Files/KDiff3/kdiff3.exe"
+git config --global mergetool.kdiff3.trustExitCode false
+
+git config --global diff.guitool kdiff3
+git config --global difftool.kdiff3.path "C:/Program Files/KDiff3/kdiff3.exe"
+git config --global difftool.kdiff3.trustExitCode false
+
+
+git merge branch_name && git mergetool --tool=kdiff3
+git difftool first_hash second_hash --tool=kdiff3 --cc some_file_in_the_git_tree

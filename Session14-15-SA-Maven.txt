@@ -1,0 +1,154 @@
+Overview of Various Build Tools
+
+Software build tools are used to automate the creation of executable applications from source code. They script or automate a variety of tasks, such as downloading dependencies, compiling and packaging code, running tests, and deployment.
+
+Different Build Tool 
+
+Maven
+Gradel
+ANT
+Hashicorp packer
+Gulp
+
+
++++++++
+Maven: 
+
+Software build tools are used to automate the creation of executable applications from source code.
+ They script or automate a variety of tasks, such as downloading dependencies, 
+compiling and packaging code, running tests, and deployment.
+
+
+Monolithic and Microservices:
+
+Account creation
+
+Customer login
+
+Insurance 
+
+Mutual fund
+
+payment
+
+++++++++++++
+Install Maven in Ubuntu
+
+Install java 
+sudo apt install openjdk-11-jdk
+
+ubuntu@ip-172-31-85-120:~$ java --version
+openjdk 11.0.19 2023-04-18
+OpenJDK Runtime Environment (build 11.0.19+7-post-Ubuntu-0ubuntu122.04.1)
+OpenJDK 64-Bit Server VM (build 11.0.19+7-post-Ubuntu-0ubuntu122.04.1, mixed mode, sharing)
+ubuntu@ip-172-31-85-120:~$
+
+
+Install Maven
+sudo apt install maven
+ubuntu@ip-172-31-85-120:~$ mvn --version
+Apache Maven 3.6.3
+Maven home: /usr/share/maven
+Java version: 11.0.19, vendor: Ubuntu, runtime: /usr/lib/jvm/java-11-openjdk-amd64
+Default locale: en, platform encoding: UTF-8
+OS name: "linux", version: "5.19.0-1025-aws", arch: "amd64", family: "unix"
+ubuntu@ip-172-31-85-120:~$
++++++++++++++++++++++++++++++++++++++++
+Different Maven repository:
+1. Central Repository
+2. Remote Repository
+3. Local Repository
+
+++++++++++++++++++++
+
+Project Object Model (POM)
+Dependencies and repositories
+Build life cycles, phases and goals
+Build profiles
+Build plugins
+_____________________
+
+Project Object Model (POM) : pom.xml
+
+Maven Quickstart Archetype
+https://maven.apache.org/archetypes/maven-archetype-quickstart/
+
+Define value for property 'groupId': com.staragile
+Define value for property 'artifactId': maven-java-project
+Define value for property 'version' 1.0-SNAPSHOT: : 1.4
+Define value for property 'package' com.staragile: :
+Confirm properties configuration:
+groupId: com.staragile
+artifactId: maven-java-project
+version: 1.4
+package: com.staragile
+ Y: : Y
++++++++++++++++++++++++++++++++++++++
+Employee classs
+{
+
+ EmloyeeRegistration
+ EmployeePayroll
+ 
+} 
+
+Mvn Commands:
+
+mvn compile
+mvn clean
+mvn test
+mvn package
+
+mvn install
+mvn validate
+mvn deploy
++++++++++++++
+Maven Web Application
+mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-webapp -DarchetypeVersion=1.4
+
+nexus
+
+https://www.simplilearn.com/tutorials/maven-tutorial/introduction-to-maven
+
+Introduction to Archetypes
+What is Archetype?
+In short, Archetype is a Maven project templating toolkit. An archetype is defined as an original pattern or model 
+from which all other things of the same kind are made. The name fits as we are trying to provide a system that provides a 
+consistent means of generating Maven projects. Archetype will help authors create Maven project templates for users,
+ and provides users with the means to generate parameterized versions of those project templates.
+ 
+ 
+ Code coverage tools:
+ JACOCO
+ COBERTURA
+ Coverage.py
+ 
+ 
+ https://www.lambdatest.com/blog/reporting-code-coverage-using-maven-and-jacoco-plugin/
+ ++++++++++++++++++++++++++++++
+ ++++++++++++++++++++++
+https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/Maven_SE/Maven.html#section2
+https://mkyong.com/maven/how-to-create-a-java-project-with-maven/
+Creation of Simple Java Application using Maven
+mvn archetype:generate -DgroupId=com.assignment -DartifactId=my-assignment -Dversion=1.0 -Dpackaging=jar -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+
+
+https://www.javatpoint.com/maven-web-application
+Creation of Java Web Application using Maven
+mvn archetype:generate -DgroupId=groupid -DartifactId=artifactid -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=booleanValue  
+
+<groupId>com.staragile.web</groupId>
+  <artifactId>staragile-web-app</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
++++++++++++++++++++
+https://www.simplilearn.com/tutorials/maven-tutorial/introduction-to-maven
+
+
+ 
+ +++++++++++++++++++++++++++++++++++++++++++++
+ ++++++
+What is spring boot?
+Java Spring Boot is an open-source tool that makes it easier to use Java-based frameworks to create microservices and web apps. 
+For any definition of Spring Boot, the conversation has to start with Java—one of the most popular and widely used development 
+languages and computing platforms for app development.
++++++++++++++++++++++

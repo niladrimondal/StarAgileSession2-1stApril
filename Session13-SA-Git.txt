@@ -68,7 +68,7 @@ create a pull request from github url
 git branch new_branch
 
 #rename git branch
-git branch -m new_branch1
+git branch -m old_name new_branch1
  
 #delete git branch 
 git branch -d new_branch
@@ -93,6 +93,13 @@ The git stash command takes your uncommitted changes (both staged and unstaged),
 git stash 
 Re-applying your stashed changes
 git stash pop
+
+
+git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, 
+and then come back and re-apply them later on. Stashing is handy if you need to quickly switch context and work on 
+something else, but you're mid-way through a code change and aren't quite ready to commit.
+
+git stash pop stash@{1}
 
 ++++++++++++++++++++
 git rebase <branchname>
@@ -127,3 +134,11 @@ git config --global difftool.kdiff3.trustExitCode false
 
 git merge branch_name && git mergetool --tool=kdiff3
 git difftool first_hash second_hash --tool=kdiff3 --cc some_file_in_the_git_tree
++++++++++++++++++++++++++++++
+Long lived branch:
+Master
+Test
+
+Short Lived branch
+
+Branching Strategy

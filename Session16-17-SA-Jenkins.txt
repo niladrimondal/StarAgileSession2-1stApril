@@ -1,0 +1,114 @@
+Jenkins: 
+
+Jenkins Written in Java programming language
+CI CD -> Continuous integration and Continuous deployment
+
+
+Deployment:
+
+Dev Environment --> developer is going to responsible
+
+Higher Environment : Test environment, Staging Environment 
+
+Final : production Environment
+
+Jenkins Architecture:
+Master and Slave architecture
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+ java --version
+sudo apt update
+sudo apt install openjdk-11-jdk
+sudo apt install maven
+
+####https://www.jenkins.io/doc/book/installing/linux/
+
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee   /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]   https://pkg.jenkins.io/debian-stable binary/ | sudo tee   /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
+
++++++++++++++++++++++++++++++++++++++
+Install Tomcat:
+sudo apt install tomcat9
+
+sudo apt install tomcat9-admin
+
+Configure user
+
+sudo vi /var/lib/tomcat9/conf/tomcat-users.xml
+
+  <role rolename="manager-gui"/>
+  <role rolename="manager-script"/>
+  <role rolename="manager-jmx"/>
+  <role rolename="manager-status"/>
+  <role rolename="admin-gui"/>
+  <role rolename="admin-script"/>
+  <user username="admin" password="niladri123" roles="manager-gui, manager-script, manager-jmx, manager-status, admin-gui, admin-script"/>
+
+
+
+configure the port
+/var/lib/tomcat9/conf/server.xml
+
+
+https://phoenixnap.com/kb/install-tomcat-ubuntu
+
+To deploy a application usingng jenkins to tomcat install below plugin "Deploy to Container"
++++++++++++++++++++++++++++++++++++++
+https://blog.devgenius.io/understanding-the-differences-between-jenkins-scripted-and-declarative-pipeline-a-comprehensive-960826e26c2#:~:text=Differences%20between%20Scripted%20and%20Declarative%20Pipeline&text=Flexibility%3A%20Scripted%20Pipeline%20provides%20more,simpler%20and%20more%20structured%20syntax.
+Scripted Pipeline:
+
+Scripted Pipeline is the original pipeline syntax for Jenkins, and it is based on Groovy scripting language. In Scripted Pipeline, the entire workflow is defined in a single file called a Jenkinsfile. The Jenkinsfile is written in Groovy and is executed by the Jenkins Pipeline plugin. Scripted Pipeline provides a lot of flexibility and control over the workflow, but it can be more complex and verbose than Declarative Pipeline. 
+
+Declarative pipeline
+Declarative Pipeline is a more recent addition to Jenkins and provides a more structured and simpler syntax for defining pipelines. Declarative Pipeline is based on the Groovy programming language, but it uses a YAML-based syntax for defining the pipeline. The main benefit of Declarative Pipeline is its readability and ease of use, as it is designed to be more intuitive and less verbose than Scripted Pipeline.
+
+Example of Scripted Pipeline:
+
+node{
+    stage('Code Chekout'){
+        git 'https://github.com/niladrimondal/addressbook-demo.git'
+    }
+    stage('Build the source code'){
+        sh 'mvn clean package'
+    }
+    stage('Deploy'){
+        deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://54.183.235.158:8081/')], contextPath: 'addressbooksc', war: '**/*.war'
+    }
+}
+
+Example of Declarative pipeline:
+pipeline {
+    agent any
+    tools{
+        maven 'my_maven'
+        git 'my_git'
+    }
+    stages {
+        stage('Code checkout') {
+            steps {
+                git 'https://github.com/niladrimondal/addressbook-demo.git'
+            }
+        }
+        stage('Build the Sourcecode') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Deploy the same to a tocat server') {
+            steps {
+                deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://54.183.235.158:8081/')], contextPath: 'addressbooksc', war: '**/*.war'
+            }
+        }
+    }
+}
+
+To Restrict the jobs into a node:
+https://stackoverflow.com/questions/63182461/jenkins-restrict-jobs-to-certain-nodes
+
+Github Webhook
+https://www.blazemeter.com/blog/how-to-integrate-your-github-repository-to-your-jenkins-project

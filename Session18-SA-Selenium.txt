@@ -1,0 +1,92 @@
+Different Types of Testing
+
+1. Manual Testing 
+2. Automated testing
+
+
+Unit Testing 
+Integration Testing
+Regression Tesing
+Smoke testing
+Alpha
+Beta
+system testing
+Stress Testing
+Performance testing (jmeter)
+acceptance testing
+
+DevSecOps
+
+1000 line of code 1000*10 
+
+Sonarqube 
+SAST 
+DAST
+
+Devops
+Cloud Security
+SRE
+
+Test Addressbokk Application using Selenium Chrome driver tool 
+
+1. Open the web application in the browser
+2. Click on the Fucntionality what we are going to test 
+3. click the button new contact
+4. enter the details in the different text box
+5. Save 
+
+New conatct with a class name: v-button
+First Name Text box : gwt-uid-5
+Last Name: gwt-uid-7
+Phone Number: gwt-uid-9
+Email: gwt-uid-11
+DOB: gwt-uid-13
+Save Button class name: v-button-primary
+Xpath
+//*[@id="gwt-uid-5"]
+/html/body/div[1]/div/div[2]/div/div[2]/div/table/tbody/tr[2]/td[3]/input
+//*[@id="addressbook-1376863011"]/div/div[2]/div/div[2]/div/table/tbody/tr[1]/td[3]/div/div[1]/div
+
+//*[@id="gwt-uid-5"]
+
+
+https://github.com/niladrimondal/addressbook-demo-selenium/tree/master
+
+https://github.com/niladrimondal/calculatorJunit
+
+https://github.com/niladrimondal/-addressbook-selenium-testng-latest/tree/master
+
+
+++++++++++++++++++++++++++++++++++++
+Install google chrome in Ubuntu
+
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+
+ubuntu@ip-172-31-25-129:~$ google-chrome --version
+Google Chrome 114.0.5735.106
+
+download oogle chrome driver:
+https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
+
+Give root permission
+## User privilege specification
+root    ALL=(ALL:ALL) ALL
+jenkins ALL=(ALL) NOPASSWD:ALL
+
+
+#Add jenkins user to ubuntu and root group
+sudo usermod -a -G ubuntu jenkins
+sudo usermod -a -G root jenkins
+
+Very important
+Restart the Jenkins
+
+
+//*[@id="container"]/div/div[1]/div[1]/div[2]/div[3]/div/div/div/a
+
+
+
+checkout the code
+
+java -jar selenium-runnable.jar

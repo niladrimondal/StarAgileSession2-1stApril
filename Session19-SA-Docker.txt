@@ -1,0 +1,29 @@
+Docker:
+sudo apt-get update
+ 
+#Use the following command to install packages to allow the apt to use a repository over HTTPS
+sudo apt-get install \
+apt-transport-https \
+ca-certificates \
+curl \
+gnupg \
+lsb-release
+
+
+#Use the following curl command to add Docker’s official GPG key:
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+#Use the following command to set up a stable repository:
+echo \
+"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+
+#
+sudo apt update
+sudo apt-get install docker-ce
+docker  --version
+
+
+docker --version

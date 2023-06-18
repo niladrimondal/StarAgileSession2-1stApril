@@ -1,0 +1,463 @@
+Docker:
+sudo apt-get update
+ 
+#Use the following command to install packages to allow the apt to use a repository over HTTPS
+sudo apt-get install \
+apt-transport-https \
+ca-certificates \
+curl \
+gnupg \
+lsb-release
+
+
+#Use the following curl command to add Docker’s official GPG key:
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+
+#Use the following command to set up a stable repository:
+echo \
+"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+
+#
+sudo apt update
+sudo apt-get install docker-ce
+docker  --version
+
+
+docker --version
++++++++++++++++++++++++++++++++++
+sudo apt update
+sudo apt install docker.io
+
+___________________________________________________________
+Actual Lab:
+
+docker run hello-world
+
+#this going to show you All the container with running / exit state
+docker ps -a
+
+#this going to show you All the container with running state
+docker ps
+
+#Remove the exit container 
+docker rm <containerid>
+
+#list of docker image
+docker images
+
+#remove docker image
+docker image rm <imageid>
+docker rmi <imageid>
+
+#create a tarfile to save the docker inage
+docker save <imagename>:<tag> -o <tarfilename>
+docker save hello-world:linux -o helloworldlinux
+
+#import the image from the tarfile
+docker load -i <tarfilename>
+++++++++++++++++++++++++
+++++++++++++++++++++++
+#to search the marketplace images
+docker search nginx
+
+
+#Two way you can run a conatainer
+
+1. Interactive terminal
+
+2. Detach terminal
+
+#pull nginx docker image
+docker pull nginx
+
+#run the nginx container (bydefalt it is going to run in a interactive terminal)
+docker run nginx 
+
+#run the nginx container with detach terminal (-d stands for detach -t stands for terminal)
+docker run -dt nginx
+
+#stop running container
+docker stop <containername/containerid>
+
+#start the container
+docker start <containername/containerid>
+
+#docker run interactive
+docker run -i ubuntu
+
+#lets try to run something in a interactive, (-i stands for interactive -t stands for terminal)
+docker run -it ubuntu
+
+#docker run detatch terminal
+docker run -dt ubuntu
+
+#we need to run to ubuntu container in a interactive terminal
+#if you want to come out of the container without exit 
+use shortcart ctrl+p+q
+
+#two way you can connect to the running container with a bash process id 1
+docker attach <containerid>
+
+#Preffered process to connect running container, create new process for your terminal instead of process id 1
+docker exec -it <conatainerid/name> <newprocess>
+docker exec -it 8d71a634622c /bin/bash
+
+#Remove stop container
+docker rm containername/containerid
+
+#delete image
+docker rmi <imageid/name>
+docker rmi $(docker images -aq)
+
+#remover all the stop container
+docker rm $(docker ps -aq)
+
+#Port Mapping 
+
+#Host Port Mapping 
+1. Custom port mapping 2. Random port maping
+
+#How to map random port
+docker run -d -P nginx
+
+#custom port
+docker run -d -p7686:80 nginx
+
+
+#login to the nginx container and change the default page
+docker exec -it  cff034d88691 /bin/bash
+
+#deafult page is /usr/share/nginx/html/index.html
+#to change the default page I have run this command inside the interactive terminal of my nginx container
+echo "Niladri Nginx for Random Port" > /usr/share/nginx/html/index.html
+
+
+++++++++++++++++++++++
+#Volume mount in you container from host filesystem
+root@ip-172-31-12-78:~# mkdir dockermount
+root@ip-172-31-12-78:~# pwd
+/root
+root@ip-172-31-12-78:~# cd dockermount/
+root@ip-172-31-12-78:~/dockermount# pwd
+/root/dockermount
+root@ip-172-31-12-78:~/dockermount# echo "Niladri's Configuration form host file system" > index.html
+root@ip-172-31-12-78:~/dockermount# cat index.html
+Niladri's Configuration form host file system
+root@ip-172-31-12-78:~/dockermount# echo "Niladri's Configuration form host file addition page" > niladri.html
+root@ip-172-31-12-78:~/dockermount# ls
+index.html  niladri.html
+root@ip-172-31-12-78:~/dockermount#
+
+
+#create a conatainer with the mount volume
+docker run -dP -v /root/dockermount:/usr/share/nginx/html nginx
+
+#docker logs <containerid>
+
+#docker logs -f <containerid>
+
+
+
+
++++++++++++++++++++++++++++++++++
+Types of Image:
+1. Base image : which start with From scratch
+
+#Hello World
+FROM ubuntu
+CMD ["echo", "Hello World"]
+
+
+# syntax=docker/dockerfile:1
+FROM scratch
+ADD hello /
+CMD ["/hello"]
+
+2. Parent Image: which is going to refer another image
+
+# syntax=docker/dockerfile:1
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN yarn install --production
+CMD ["node", "src/index.js"]
+EXPOSE 3000
+
++++++++++++
+
+# To create any custom image you need to maintain a Dockerfile
+# You are going to define all the instruction what your image is going to do
+
+Dockerfile Format
+The Dockerfile is a raw text document. The following are some popular instructions in a Dockerfile.
+FROM – This instruction defines the parent image for subsequent instructions. FROM clause must be the first entry in a Dockerfile. It can come after a comment or parse directive or ARG used in the FROM directive.
+
+ARG – It defines variables used during the build once you run Docker build command on the file.
+AD
+CMD – This sets the command executed upon container creation. Docker only allows one CMD instruction per file. When you have more than one defined, it runs the last command.
+
+LABEL – The label instruction defines metadata information for the image. You can add as many labels as you see fit in the form of key-value pairs. For example, image metadata could include the version number, author information, description, etc.
+
+RUN – Sets the instructions to be executed during the image build.
+
+USER – This instruction sets the username or UID of the user when running the image or instructions in a Dockerfile such as CMD, RUN, and ENTRYPOINT.
+AD
+ENTRYPOINT – It defines the commands Docker executes upon container creation. Options are overridable in the command line during container startup.
+
+ADD – This instruction copies files and directories from the specified source to a specified destination. The source can be a local path or an external URL. If the files are archives, Docker automatically unpacks them into the image.
+
+VOLUME – The volume instructions allow you to create mount points from host machine directories or other containers.
+
+EXPOSE – This instruction tells Docker which port to listen on during runtime.
+
+AD
+ENV – It sets environment variables.
+
+WORKDIR – sets the current working directory. If the directory specified does not exist, Docker will automatically create one.
+
+The above are some standard instructions you can use in a Dockerfile.
+
+###Docker file for apache2
+FROM ubuntu:20.04
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update
+RUN apt-get install -y apache2
+COPY index.html /var/www/html/
+CMD ["apache2ctl", "-D", "FOREGROUND"]
+EXPOSE 80
+
+
+#index.html content
+<html>
+  <head>
+    <title>Docker Page </title>
+  </head>
+  <body>
+        <h1>Apache Server 2</h1>
+        <p>My Apache</p>
+  </body>
+</html>
+
+#you can also mount the path 
+docker run -dtP -v /root/images/demo1:/var/www/html   niladrimondaldcr/apacheserver:1.0
+
++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++
+#Build the docker image
+docker build -t <imagename>:<tag-version> <pathof thedockerfile>
+
+docker build -t <imagename>:<tag-version> -f <Dockerfilename> <path of the dockerfile>
+
+docker build -t niladringinx:1.0 . 
+
+#docker run
+docker run -dP niladringinx:1.0
+++++++++++++++++++++++++++++++
+++++++++++++++++++++++
+#Volume mount in you container from host filesystem
+https://docs.docker.com/storage/
+Choose the right type of mount:
+1. Bind Mount
+2. Volume
+3. tmpfs mount
+
+Volume:
+Volumes are stored in a part of the host filesystem which is managed by Docker (/var/lib/docker/volumes/ on Linux).
+Non-Docker processes should not modify this part of the filesystem. Volumes are the best way to persist data in Docker.
+
+Bind Mount:
+Bind mounts may be stored anywhere on the host system. They may even be important system files or directories. 
+Non-Docker processes on the Docker host or a Docker container can modify them at any time.
+
+tmpfs mount:
+tmpfs mounts are stored in the host system’s memory only, and are never written to the host system’s filesystem.
+
+#Bind Mount Example
+root@ip-172-31-12-78:~/dockermount# pwd
+/root/dockermount
+root@ip-172-31-12-78:~/dockermount# echo "Niladri's Configuration form host file system" > index.html
+root@ip-172-31-12-78:~/dockermount# cat index.html
+Niladri's Configuration form host file system
+root@ip-172-31-12-78:~/dockermount# echo "Niladri's Configuration form host file additional page" > niladri.html
+root@ip-172-31-12-78:~/dockermount# ls
+index.html  niladri.html
+root@ip-172-31-12-78:~/dockermount#
+
+#create a conatainer with the mount volume
+docker run -dP -v /root/dockermount:/usr/share/nginx/html nginx
+
+
+#Docker Volume
+docker volume ls
+docker volume create my-vol
+docker inspect my-vol
+docker run -itd -v my-vol:/datasg ubuntu
+Outpu: 
+root@ip-172-31-82-99:~# docker inspect my-vol
+[
+    {
+        "CreatedAt": "2023-06-17T10:11:27Z",
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/my-vol/_data",
+        "Name": "my-vol",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+
+++++++++++++++++++++++++++++
+Compose is a tool for defining and running multi-container Docker applications. 
+With Compose, you use a YAML file to configure your application’s services. 
+Then, with a single command, you create and start all the services from your configuration.
+
+Compose works in all environments: production, staging, development, testing, as well as CI workflows.
+
+Docker compose:
+apt update
+apt install docker.io
+apt install docker-compose
+
+docker-compose build
+
+docker-compose up
+
+docker-compose up -d
+
+docker-compose down
+
+++++++++++++++++++++++++++++
+vi docker-compose.yml
+
+version: '2'
+services:
+  compose-test:
+    image: centos
+    links:
+      - compose-db
+    command: /usr/bin/curl compose-db:6379
+  compose-db:
+    image: redis
+    expose:
+      - "6379"
+++++++++++++++++++++++++++++++++
+#Wordpress
+vi docker-compose.yml
+
+version: '3'
+services:
+  db:
+    container_name: wp_mysql
+	image: mysql:5.7
+	volumes:
+	  - "$PWD/data:/var/lib/mysql"
+	environment: 
+	  MYSQL_ROOT_PASSWORD: 123456
+	  MYSQL_DATABASE: wordpress
+	  MYSQL_USER: wordpress
+	  MYSQL_PASSWORD: wordpress
+	ports:
+	  - "3306:3306"
+  wp:
+    container_name: wp_web
+	image: wordpress
+	volumes:
+	  - "$PWD/html:/var/www/html"
+	depends_on:
+	  - db
+	ports:
+	  - "9091:80"
+	environment:
+	  WORDPRESS_DB_HOST: db:3306
+	  WORDPRESS_DB_USER: wordpress
+	  WORDPRESS_DB_PASSWORD: wordpress
+++++++++++++++++++++++++++++++++
+sudo docker pull ubuntu
+
+++++++++++++++++++++++++
+docker tag 58db3edaf2be niladrimondaldcr/niladriubuntu:1.0
+
+authenticate 
+docker login 
+username: 
+password:
+
+docker push niladrimondaldcr/niladriubuntu:1.0
+
++++++++++++++++++++++++++
+work with private docker registry
+docker pull registry:2
+docker images
+
+sudo docker run -d -p 5000:5000 --restart=always --name registry registry:2
+
+docker ps 
+
+now private registry created 
+we need to tag the images with the private registry
+
+docker tag IMAGE_ID YOUR_REGISTRY/myimage:latest
+
+docker tag 58db3edaf2be localhost:5000/niladriubuntu:1.0
+
+docker images
+
+docker push localhost:5000/niladriubuntu:1.0
+
+#to see the images pushed
+browse: localhost:5000/v2/_catalog
+
+cleanup:
+sudo docker rm -f $(docker ps -aq) 
+sudo docker rmi $(docker images -q)
+
++++++++++++++++++++++++++++
+# addressbook Dockerfile
+clone the addressbook repository
+mvn clean install to generate the target file and then build the docker image
+
+FROM tomcat:9.0
+COPY target/addressbook-2.0.war /usr/local/tomcat/webapps/
+CMD ["catalina.sh", "run"]
+EXPOSE 8080
+
+docker run -dt -P 8082:8080 <image>
+
+application will be accessible on http://<ip>:8082/addressbook-2.0
+++++++++++++++++++++++++++++++
+https://www.simplilearn.com/tutorials/docker-tutorial/docker-swarm#what_is_docker_swarm
+
+https://k21academy.com/docker-kubernetes/docker-swarm/
+
+https://docs.docker.com/engine/swarm/swarm-tutorial/deploy-service/
+
+Docker Swarm is an orchestration management tool that runs on Docker applications. 
+It helps end-users in creating and deploying a cluster of Docker nodes.
+
+###Run on Swarm Manager
+sudo apt-get update
+sudo apt install docker.io
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo docker --version
+sudo docker swarm init --advertise-addr 172.31.61.137
+sudo docker node ls
+sudo docker service create --name HelloWorld alpine ping docker.com
+sudo docker service ls
+sudo docker ps
+
+
+####Run On worker node
+docker swarm join --token SWMTKN-1-5c6dutiwh13zldeezmowzp06u2nbf20rdjjnldmz1lemxkzfvr-7qdk3sa3ofl93flsw4tvzh8ir 172.31.61.137:2377
+
+
+#####Describe the deployed service
+service inspect --pretty <service id>
+docker service inspect <service name>
+docker service ps <serviceid>
+docker service scale HelloWorld=5
+docker service ls
+docker service ps HelloWorld

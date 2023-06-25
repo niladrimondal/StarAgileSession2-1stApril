@@ -1,0 +1,427 @@
+#Install Ansible on Ubuntu 
+https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html
+
+$ sudo apt update
+$ sudo apt install software-properties-common
+$ sudo add-apt-repository --yes --update ppa:ansible/ansible
+$ sudo apt install ansible
+
++++++++++++++++++++++++++++++++
+cd /etc/ansible
+cat /etc/ansible
+# Since Ansible 2.12 (core):
+# To generate an example config file (a "disabled" one with all default settings, commented out):
+#               $ ansible-config init --disabled > ansible.cfg
+#
+# Also you can now have a more complete file by including existing plugins:
+# ansible-config init --disabled -t all > ansible.cfg
+
+# For previous versions of Ansible you can check for examples in the 'stable' branches of each version
+# Note that this file was always incomplete  and lagging changes to configuration settings
+
+# for example, for 2.9: https://github.com/ansible/ansible/blob/stable-2.9/examples/ansible.cfg
+
++++++++++++++++++++++++++++++++++++++++
+copy the key to controller node and use the same key to create the host nodes
+scp -i ank.pem ank.pem ubuntu@3.94.201.190:/home/ubuntu 
+
+#Set the host node in anible controller node /etc/ansible/hosts with private key
+[webserver]
+172.31.84.51 ansible_ssh_private_key_file=/home/ubuntu/ank.pem ansible_user=ubuntu
+chmod 600 ank.pem
+Important key should have 600 
+chmod 600 ank.pem
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#check the setup
+ansible -m setup localhost
+
+ansible -m ping webserver
+
+
+ansible -m ping localhost
+
+#create user
+ansible -b -m user -a 'name=niladri' webserver
+#ask for password
+ansible -b -K -m user -a 'name=niladri' webserver
+
+ansible webserver -a"apt install httpd -y"
+
+ansible -b webserver -a"apt update -y"
+
+ansible webserver -a"touch niladri"
+
+ansible -b  webserver -a"apt install docker.io -y"
+
+ansible -m service -a 'name=ssh state=started' webserver
+
+#List The all hosts adhoc command
+ansible all --list-hosts
+ansible demo --list-hosts
+
+ansible demo[1] --list-hosts
+
+#if you  wanted to get last node of the group
+ansible demo[-1] --list-hosts
+
+#if you  wanted to get last node of the all the groups 
+[root@ip-172-31-57-116 ~]# ansible all[-1] --list-hosts
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+what is adhoc command
+what is module
+what is playbook
+
+++++++++++++++++++++++++ Exercise with Adhoc+++++++++++++++++++++++++++++++++
+#usecase 1 , I will create manually files in nodes ansible users , I want list them using adhoc ansible command from the master
+ansible <groupname> -a"linux command"  -----> -a stands for arguments
+
+ansible demo -a"ls"
+
+#usecase 2 , If i want to list the files in node1
+ansible demo[1] -a"ls"
+
+#usecase 3 install httpd in nodes in nodes
+ansible demo -a"yum install httpd -y"
+ansible demo -a"sudo yum install httpd -y"
+
+ansible demo -a"sudo yum remove httpd -y"
+
+#create a file in nodes 
+ansible demo -a"touch niladri"
+
+#create a directory in node1
+ansible demo[1] -a"mkdir nil"
+
+++++++++++++++++++++++++++++++++++++++++
+Second classs:
+#install docker using playbok #you need to understand 
+[ansible@ip-172-31-57-116 ~]$ vi myfirstplaybook.yaml
+
+--- #our first playbook to install the docker
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install docker on nodes
+      action: yum name=docker state=present
+	  
+
+[ansible@ip-172-31-57-116 ~]$ ansible-playbook myfirstplaybook.yaml
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#Remove docker and install httpd using playbok #you need to understand
+[ansible@ip-172-31-57-116 ~]$ cat myfirstplaybook.yaml
+--- #our first playbook to install the docker
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install docker on nodes
+      action: yum name=docker state=absent
+    - name: install httpd
+      action: yum name=httpd state=present
+[ansible@ip-172-31-57-116 ~]$
++++++++++++++++++++++++++++++++++++++++++
+
+#create a file in master and copy the same to node using play book
+
+touch index.html
+
+[ansible@ip-172-31-57-116 ~]$ cat myfirstplaybook.yaml
+--- #our first playbook to install the docker
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install docker on nodes
+      action: yum name=docker state=absent
+    - name: install httpd
+      action: yum name=httpd state=present
+    - name: copy index.html
+      ansible.builtin.copy:
+           src: /home/ansible/index.html
+           dest: /home/ansible/
+[ansible@ip-172-31-57-116 ~]$
+
+
+[ansible@ip-172-31-57-116 ~]$ cat myfirstplaybook.yaml
+--- #our first playbook to install the docker
+- hosts: demo
+  user: ansible
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install docker on nodes
+      action: yum name=docker state=absent
+    - name: install httpd
+      action: yum name=httpd state=present
+    - name: copy index.html
+      ansible.builtin.copy:
+           src: /home/ansible/index.html
+           dest: /home/ansible/
+    - name: create directory
+      action: file name=niladridir state=directory
+[ansible@ip-172-31-57-116 ~]$
++++++++++++++++++++++++++++++++
+####run a module, using a module install docker
+
+ansiable demo -b -m yum -a "pkg=docker state=present"
+
+++++++++++++++++++++++++++++++++++++++++++
+#host an application on the httpd server using handlers
+
+[ansible@ip-172-31-57-116 ~]$ cat httpdserver.yaml
+--- #Myweb For handlers
+- hosts: demo #your host
+  user: ansible #user
+  become: yes #if you want to use root priviledge to perform some actions
+  connection: ssh #connect type
+  tasks:
+    - name: install httpd
+      action: yum name=httpd state=present
+      notify: restart httpd
+    - name: copy index.html
+      ansible.builtin.copy:
+           src: /home/ansible/index.html
+           dest: /var/www/html/
+  handlers:
+    - name: restart httpd
+      action: service name=httpd state=restarted
+[ansible@ip-172-31-57-116 ~]$
+
++++++++++++++++++++++++++++++++
+script
+ansible -m shell -a "service apache2 status" webservers
+
+ansible -m setup webservers 
+
+ansible webservers -m shell -a 'hostname'
+
+ansible webservers -m apt -a 'name=git state=present' --become
+
+ansible webservers -m file -a 'dest=/root/sample.txt state=touch mode=600 owner=root group=root' --become
+++++++++++++++++++++++++++++++++++++++++++++++
+ubuntu@ip-172-31-93-211:~$ cat new.yaml
+- hosts: webserver
+  user: ubuntu
+  become: yes
+  connection: ssh
+  tasks:
+    - name: install docker on nodes
+      action: apt name=docker.io state=absent
+    - name: install maven
+      action: apt name=maven state=present
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+- hosts: webserver #your host
+  user: ansible #user
+  become: yes #if you want to use root priviledge to perform some actions
+  connection: ssh #connect type
+  tasks:
+    - name: install httpd
+      action: apt name=apache2 state=present
+      notify: restart httpd
+    - name: copy index.html
+      ansible.builtin.copy:
+           src: /home/ubuntu/index.html
+           dest: /var/www/html/
+  handlers:
+    - name: restart httpd
+      action: service name=apache2 state=restarted
+	  
++++++++++++++++++++++++++++++++++++++++++++++
+- hosts: webserver
+  become: yes
+  vars:
+    users:
+    - username: niladri
+    - username: pampa
+    - username: satvik
+  tasks:
+  - name: create group for users
+    group:
+      name: family
+      state: present
+  - name: create user "{{ item.username }}"
+    user:
+      name: "{{ item.username }}"
+      create_home: yes
+      groups: family
+    with_items: "{{ users }}"
+	
++++++++++++++++++++++++++++++++++++++++++++++++
+- hosts: sg
+  user: ubuntu
+  become: yes
+  connection: ssh
+  tasks:
+    - name: update apt
+      command: 'apt update'
+    - name: install docker
+      action: apt name=docker.io state=present
+    - name: install maven
+      action: apt name=maven state=present
+    - name: install git
+      action: apt name=git state=present
+    - name: checkout the code
+      action: git repo=https://github.com/niladrimondal/addressbook-demo.git dest=/home/ubuntu/addressbook
+    - name: maven build
+      command: 'mvn clean package'
+      args:
+        chdir: '/home/ubuntu/addressbook'
+
+    - name: build docker image
+      command: 'docker build -t addresssbook:1.0 .'
+      args:
+        chdir: '/home/ubuntu/addressbook'
+
+    - name: Run addressbook container
+      command: 'docker run -td -p 80:8080 addresssbook:1.0'
+	  
++++++++++++++++++++++++++++++++++++++++
+
+Ansible Roles
+https://galaxy.ansible.com/
+
+switch to root if you are planning to create at /etc/ansible/roles
+
+root@ip-172-31-26-89:/etc/ansible/roles# ansible-galaxy init demo-role
+- Role demo-role was created successfully
+root@ip-172-31-26-89:/etc/ansible/roles# ls
+demo-role
+
+#Inside the demo role you will see below folder structure
+root@ip-172-31-26-89:/etc/ansible/roles/demo-role# ls
+README.md  defaults  files  handlers  meta  tasks  templates  tests  vars
+root@ip-172-31-26-89:/etc/ansible/roles/demo-role#
+
+#next we will create the ansible tasks
+cd tasks
+root@ip-172-31-26-89:/etc/ansible/roles/demo-role/tasks#  cat main.yml
+---
+# tasks file for demo-role
+- name: install nginx web server
+  apt: pkg=nginx state=present
+  notify:
+  - start nginx #once Handlers got created
+
+- name: create group
+  group: name=demo-group state=present
+  register: group_success #If group creation is success then only User should create below in the group
+  ignore_errors: True # ignore the errors
+
+- name: create user
+  user: name=demo-user group=demo-group create_home=yes
+  when: group_success is success # it will create if group created
+
+- name: deploy index.html
+  copy: src=index.html dest=/var/www/html/ mode=644
+
+# index. html file should be created
+ cd files
+ root@ip-172-31-26-89:/etc/ansible/roles/demo-role/files# ls
+index.html
+root@ip-172-31-26-89:/etc/ansible/roles/demo-role/files# cat index.html
+<html>
+  <title>
+        <p>Ansible</p>
+  </title>
+  <body>
+        <h5>Welcome to Ansible Roles</h5>
+  </body>
+
+</html>
+
+# we will create a handelers to restart the nginx 
+cd handlers
+root@ip-172-31-26-89:/etc/ansible/roles/demo-role/handlers# cat main.yml
+---
+# handlers file for demo-role
+- name: start nginx
+  service: name=nginx state=started
+
+# now it is time to apply the role
+#come to the same directory where your role is available
+
+root@ip-172-31-26-89:/etc/ansible/roles# ls
+demo-role  nginx-roles.yml
+root@ip-172-31-26-89:/etc/ansible/roles# cat nginx-roles.yml
+---
+- hosts: sg
+  become: yes
+  roles:
+  - demo-role
+root@ip-172-31-26-89:/etc/ansible/roles#
+
+#Finaly run
+root@ip-172-31-26-89:/etc/ansible/roles# ansible-playbook nginx-roles.yml
+
+#Now Access Web Page
+http://<nodeip>/
+++++++++++++++++++++++++++++++++++++++
+
+Roles Example 
+Now update the /etc/motd file using ansible playbook roles
+
+
+ubuntu@ip-172-31-26-89:~/niladri-role$ ls
+README.md  defaults  files  handlers  meta  tasks  templates  tests  vars
+ubuntu@ip-172-31-26-89:~/niladri-role$
+
+# Create a Template file demor.j2
+ubuntu@ip-172-31-26-89:~/niladri-role/templates$ cat demor.j2
+Welcome to {{ ansible_hostname }}
+
+
+This File was created on {{ ansible_date_time.date }}
+
+Go Away if you have no business being here
+
+
+contact {{ system_manager }} if anything is wrong
+
+
+#Create tasks to use the main.yml file present inside the tasks folder, Use the same Template file to create a task
+ubuntu@ip-172-31-26-89:~/niladri-role/tasks$ ls
+main.yml
+ubuntu@ip-172-31-26-89:~/niladri-role/tasks$ cat main.yml
+---
+# tasks file for niladri-role
+- name: copy demor file
+  template:
+     src: templates/demor.j2
+     dest: /etc/demor
+     owner: root
+     group: root
+     mode: 0444
+ubuntu@ip-172-31-26-89:~/niladri-role/tasks$
+
+# Create Ansible custom Variable which is used by template file
+ubuntu@ip-172-31-26-89:~/niladri-role/defaults$ ls
+main.yml
+ubuntu@ip-172-31-26-89:~/niladri-role/defaults$ cat main.yml
+---
+# defaults file for niladri-role
+system_manager: niladrimondal.mondal@gmail.com
+ubuntu@ip-172-31-26-89:~/niladri-role/defaults$
+
+#Finally Create ansible-role playbook same directory where role base folder got created
+
+root@ip-172-31-26-89:/etc/ansible/roles# ls
+ demor-role.yaml    niladri-role
+root@ip-172-31-26-89:/etc/ansible/roles# cat demor-role.yaml
+---
+- name: use demor role playbook
+  hosts: sg
+  user: ubuntu
+  become: true
+  roles:
+    - role: niladri-role
+      system_manager: niladrimondal.mondal@gmail.com
+root@ip-172-31-26-89:/etc/ansible/roles#
+

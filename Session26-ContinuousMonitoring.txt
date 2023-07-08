@@ -1,0 +1,136 @@
+continuous Monitoring:
+Environment
+resources:
+1. cpu
+2. Memory
+3. Disk
+4. Networking
+etc
+
+abc---> 10 users ---> 100 users---> cpu 2core---> 1.5 core utilized ---> 8 GB ---> 6GB
+
+Deployed your application: HA: node 2 : 1node is down
+
+Merory 100%
+CPU 100%
+disk 100%
+
+System is going to crash
+
+Management today we have 1000users hit my application, 
+
+Servers, application with continuous Monitoring tools ---> 
+
+Different Monitoring:
+
+Application Health Monitoring
+
+Infrastructure Monitoring 
+
+Network Performance
+
+Application Performance
++++++++++++++++++++++++++++++++++++++++++++++++
+
+Res:
+interval 10 Mins
+
+1. vm check cpu memory and disk.
+2. Application Active request count 
+
+/metrics/cpu_utilization_max
+
+Configure prometheus /metrics
+Configure node-exporter /metrics
+configure cadvisor  /metrics
+
+
+#Prometheus installation
+without Docker:
+wget https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz
+tar -xvf prometheus-2.45.0.linux-amd64.tar.gz
+cd prometheus-2.45.0.linux-amd64/
+./prometheus --config.file=prometheus.yml
+
+prometheus.yml
+
+  - job_name: "Node-exporter"
+
+    static_configs:
+      - targets: ["44.202.80.68:9100"]
+
+  - job_name: "C-advisor"
+
+    static_configs:
+      - targets: ["44.202.80.68:8080"]
+
+With Docker:
+docker run -itd -p 9090:9090 -v /home/ubuntu/prometheus.yml:/etc/prometheus/prometheus.yml prom/prometheus
+
+#Node exporter installation
+docker run -itd -p 9100:9100 prom/node-exporter
+
++++++++++++++++++++++++++++++
+https://prometheus.io/docs/guides/cadvisor/
+
+#docker-compose.yml 
+#Use docker compose to install Cadvisor
+version: '3.2'
+services:
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+    - 8080:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+    - redis
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+    - 6379:6379
+	
+#command
+sudo docker-compose -d up
+
++++++++++++++++++++++++++++++++++++++++++++++++
+https://grafana.com/docs/grafana/latest/setup-grafana/installation/debian/
+sudo apt-get install -y apt-transport-https
+sudo apt-get install -y software-properties-common wget
+sudo wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
+
+
+echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+
+echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com beta main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
+
+# Updates the list of available packages
+sudo apt-get update
+
+# Installs the latest OSS release:
+sudo apt-get install grafana
+
+# Installs the latest Enterprise release:
+sudo apt-get install grafana-enterprise
+
+sudo systemctl daemon-reload
+sudo systemctl start grafana-server
+sudo systemctl status grafana-server
+sudo systemctl status grafana-server
+
+
+url: http://3.82.165.59:3000/login
+
++++++++++++++++++++++++++++++++++++++
+You can download the dashboard
+Docker Container
+CPU Utilization Details (Cores) Enway
+
+visualization tool Grafana:
+username : admin
+password: admin

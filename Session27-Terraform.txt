@@ -1,0 +1,220 @@
+Infrastructure as a code: IaC
+AWS: Cloud Formation
+Azure : Azure Resource Manager template
+
+
+Terraform:
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+To deploy the addressbok application:
+1. clone the repo and checkout the code
+2. build the source code 
+3. we will get a war file
+condition: either you want to deploy as a war or containerize the same
+
+4. Setup a VM
+5. I need install the required software to run the war
+6. run the war file either in tomcat or run a docker container
+
+Infrastructure automation:
+
+setting up the VM(vpc, subnet, elastic ip, security group, internet gateway,routing table, etc) and opeing the port 8080. 15mins
+
+if i ask you setup 1000vm like that 
+
+++++++++++++++++++++++++++++++++++++
+Terraform init
+Terraform validate
+Terraform plan
+Terraform Apply
+Terraform Destroy
+
+++++++++++++++++++++++++++
+Ububtu Virtual Maching, RDS MYSql Database, S3 Bucket, eks, iam 
+
+Terraform Template: version 1 ---> apply vm, mysql, s3
+
+Terraform Template: version 2 ---> apply eks
+
+Terraform Template: version 3 ---> Apply iam
+
+Terraform state file
+ 
+
++++++++++++++++++++++++++++++++
+xyz.tf
+
+++++++++++++++++++++
+Main commands:
+  init          Prepare your working directory for other commands
+  validate      Check whether the configuration is valid
+  plan          Show changes required by the current configuration
+  apply         Create or update infrastructure
+  destroy       Destroy previously-created infrastructure
+
+All other commands:
+  console       Try Terraform expressions at an interactive command prompt
+  fmt           Reformat your configuration in the standard style
+  force-unlock  Release a stuck lock on the current workspace
+  get           Install or upgrade remote Terraform modules
+  graph         Generate a Graphviz graph of the steps in an operation
+  import        Associate existing infrastructure with a Terraform resource
+  login         Obtain and save credentials for a remote host
+  logout        Remove locally-stored credentials for a remote host
+  metadata      Metadata related commands
+  output        Show output values from your root module
+  providers     Show the providers required for this configuration
+  refresh       Update the state to match remote systems
+  show          Show the current state or a saved plan
+  state         Advanced state management
+  taint         Mark a resource instance as not fully functional
+  test          Experimental support for module integration testing
+  untaint       Remove the 'tainted' state from a resource instance
+  version       Show the current Terraform version
+  workspace     Workspace management
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
+export AWS_REGION=""
+###optional
+export AWS_SESSION_TOKEN=""
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#Configuration file main.tf
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+resource "aws_s3_bucket" "sas3" {
+
+  bucket = "sg-niladri-12345"
+  acl    = "private"
+  tags   = {
+    Name = "SG Bucket"
+    Environment = "dev"
+  }
+
+}
+
+resource "aws_instance" "sgvm" {
+  ami = "ami-053b0d53c279acc90"
+  instance_type = "t2.nano"
+  key_name = "terraform"
+  tags = {
+    Name = "sgterraform"
+  }
+}
+
++++++++++++++++++++++++++++++++++++
+terraform state list
+terraform state pull
++++++++++++++++++++++++++++++++++++
+Requirement is that open the AWS console and Get the deployed vm Public IP and Hist the same with the addressbook url
+
+http://<publicip>:8080/addressbook
+
+
+steps:
+I am going to use containerization approach
+
+1. Setup a Security group
+2. Open the inbound port 8080
+3. Open the outboud port all trfic
+4. setup a vm (which is depndent on security group)
+5. userdata :
+	set of instruction you can provide to ur vm when it bootstrap 
+	
+++++++++++++++++++++++++++++
+# for authentication you create a creds.tf file
+
+provider "aws" {
+  access_key = ""
+  secret_key = ""
+  region = ""
+  #####optional
+  token = ""
+}
++++++++++++++++++++++++++++++
+########addressbook.sh
+
+#!/bin/bash
+apt-get update
+apt-get install docker.io -y
+docker run -itd -p 8080:8080 niladrimondaldcr/addressbook:1.0
+
++++++++++++++++++++++++++++++
+############# main.tf
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+resource "aws_security_group" "allow_tls" {
+  name        = "allow_tls"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = "vpc-070d579448cbba87f"
+
+  ingress {
+    description      = "TLS from addressbook"
+    from_port        = 8080
+    to_port          = 8080
+    protocol         = "tcp"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "allow_tls_addressbook"
+  }
+}
+
+resource "aws_instance" "addressbookvm" {
+  ami    =    "ami-0f8e81a3da6e2510a"
+  instance_type = "t2.micro"
+  key_name = "jeinkis-server-key"
+  tags = {
+    Name: "addressbookvm"
+  }
+  vpc_security_group_ids = ["${aws_security_group.allow_tls.id}"]
+  user_data = file("${path.module}/addressbook.sh")
+}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

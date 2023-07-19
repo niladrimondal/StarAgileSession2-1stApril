@@ -1,0 +1,42 @@
+1. Write a Springboot Application using spring initializer and include all the plugins
+h2
+web
+junit
+
+Write the corrosponding API
+
+/createPolicy- post - json
+/updatePolicy/{policyID} - Put - json
+/viewPolicy/{policyID} - Get 
+/deletePolicy/{policyID} - Delete
+
+2. Write Testcases to check the functionality 
+	Junit
+	
+3. Github Repository: version contron of our code; Push the code
+
+4. Ec2 instance: Two servers 1. Devops 2. Application 
+       - git
+	   - Java
+	   - Maven
+	   - Jenkins
+	   - Selium Chrome Driver
+	   - Ansible
+	   - Docker
+	   
+5. Establish Jenkins Pipeline
+		- Required Plugins should be installed
+		- Global tool Configuration as required
+		- Create Pipeline
+		- Checkout the code
+		- Also configure GitHub Webhook
+		- mvn Clean Package
+		- Publish testcase report
+		- Build Docker image
+		- Push docker image to Dockerhub
+		- setup the Application server using Ansible 
+		- Deploy the Application as a container in the application server
+		- Selenium Testcases
+		- Generate the report
+		- Promote to Production
+	   

@@ -39,4 +39,177 @@ Write the corrosponding API
 		- Selenium Testcases
 		- Generate the report
 		- Promote to Production
+		
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#Install Java
+sudo apt update
+sudo apt install openjdk-11-jdk
+java --version
+
+#Install Maven
+sudo apt install maven
+mvn --version
+
+#Install Jenkins
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins
 	   
+#Install Ansible
+$ sudo apt update
+$ sudo apt install software-properties-common
+$ sudo add-apt-repository --yes --update ppa:ansible/ansible
+$ sudo apt install ansible
+
+#Install Docker
+sudo apt install docker.io -y
+
++++++++++++++++++++++++++++++
+I have checked the Ansible connection from the controler node to manage node
+vi /etc/ansibles/hosts
+[testserver]
+<hostip>  ansible_ssh_private_key_file=/home/ubuntu/<pem file name>.pem ansible_user=ubuntu
+#makesure you have changed the permission of the pem file to 400 
+chmod 400 <pem file name>.pem
+#ping 
+ansible -m ping <groupname>
+
+#COnfrigure the required plugins
+Docker
+Ansible 
++++++++++++++++++++++++++sudo apt install openjdk-11-jdk
+java --version
+sudo apt install maven
+
+
+https://pkg.jenkins.io/debian-stable/
+
+
+
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo tee \
+    /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+	
+	
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+    https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+    /etc/apt/sources.list.d/jenkins.list > /dev/null
+	
+sudo apt-get update
+sudo apt-get install jenkins
+
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt update
+sudo apt install ansible
+ansible -m ping localhost
+
+sudo apt install -y docker.io
+
+#
+
+mvn clean install
+
+it will create the target folder
+
+now build the docker image using docker file
+
+docker build -t imagename .
+
+docker push imagename 
+
+docker run -itd -p 8084:8081 imagename 
+
++++++++++++++++++++++++++++++++
+#configure Ansible to deploy docker in test server
+
+vi /etc/ansible/hosts
+[insure-me-server]
+52.86.224.46 ansible_ssh_private_key_file=/home/ubuntu/devopsserver.pem ansible_user=ubuntu
+
+#to copy from local to server
+scp -i ./devopsserver.pem ./devopsserver.pem ubuntu@44.203.135.223:/home/ubuntu/
+
+chmod 400 /home/ubuntu/devopsserver.pem
+
+#ping worker node server
+ansible -m ping insure-me-server 
+
+#write the selenium
+
+#Configure jenkins 
+maven docker ansible
+
+install docker ansible plugins 
+
+#install plugin for publish html report for unit testcases 
+HTML Publisher
+
+#install credential binding plugin(if it is not installed)
+
+#Insall Google chrome:
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+// ignore the permission denied error
+
+#check the version 
+google-chrome --version
+
+
+#download the googlechrome driver specific version based on the browser version
+wget https://chromedriver.storage.googleapis.com/111.0.5563.64/chromedriver_linux64.zip
+unzip chromedriver_linux64.zip
+
+scp -i ./devopsserver.pem ./selenium-insure-me.jar ubuntu@52.6.45.41:/home/ubuntu/
+
+
+selenium jenkins script
+node {
+    stage ('code checkout'){
+        echo 'Code Checkout'
+        git 'https://github.com/niladrimondal/insure-me.git'
+    }
+    stage ('selenium test'){
+        sh 'java -jar selenium-runnable.jar'
+    }
+}
+
++++++++++++++++++++++++++++++++++++++++
+project 2
+
+Publish over ssh
+
+minikube service medicure-np-service --url
+
+https://minikube.sigs.k8s.io/docs/handbook/accessing/
+
+
+Install terraform plugin from jenkins
+
+https://computingforgeeks.com/how-to-install-terraform-on-ubuntu/
+
+
+Project 3 kubernetes:
+
+https://blog.searce.com/automation-of-infrastructure-using-jenkins-and-terraform-90b07f1bef8c
+
+
+
+https://medium.com/geekculture/how-to-deploy-the-kubernetes-application-to-aws-eks-using-terraform-and-ansible-7679a3a207a8
+
+Github Links:
+
+https://github.com/niladrimondal/star-agile-health-care.git
+
+https://github.com/niladrimondal/insure-me
+
+https://github.com/niladrimondal/insureme-selenium
+
+https://github.com/niladrimondal/insureme-selenium/tree/linuxchrome
+
+
+https://github.com/niladrimondal/star-agile-banking-finance
+
+https://github.com/niladrimondal/staragile-aws-instance

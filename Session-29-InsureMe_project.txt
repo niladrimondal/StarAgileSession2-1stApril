@@ -212,4 +212,5 @@ https://github.com/niladrimondal/insureme-selenium/tree/linuxchrome
 
 https://github.com/niladrimondal/star-agile-banking-finance
 
-https://github.com/niladrimondal/staragile-aws-instance
+https://github.com/niladrimondal/staragile-aws-instance\
+

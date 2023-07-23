@@ -134,6 +134,9 @@ mvn archetype:generate -DgroupId=com.assignment -DartifactId=my-assignment -Dver
 
 
 https://www.javatpoint.com/maven-web-application
+
+https://maven.apache.org/archetypes/maven-archetype-webapp/
+
 Creation of Java Web Application using Maven
 mvn archetype:generate -DgroupId=groupid -DartifactId=artifactid -DarchetypeArtifactId=maven-archetype-webapp -DinteractiveMode=booleanValue  
 
@@ -152,3 +155,11 @@ Java Spring Boot is an open-source tool that makes it easier to use Java-based f
 For any definition of Spring Boot, the conversation has to start with Java—one of the most popular and widely used development 
 languages and computing platforms for app development.
 +++++++++++++++++++++
+
+Spring boot Architecyure
+Presentation Layer 
+business Layer
+persistence Layer
+Database layer
+
+https://start.spring.io/

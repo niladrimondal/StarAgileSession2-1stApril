@@ -1,0 +1,49 @@
+1.Explain about Overview of Application
+
+2. needs of application, Benefits of Application
+
+3. Features fo Application
+
+4. Application Requirements
+
+5. Types of Application
+
+Desktop Application 
+Desktop applications are software programs run locally on computer devices. They aren’t accessible from a browser, like web-based apps, and require deployment on a personal computer or laptop.
+https://whatfix.com/blog/desktop-application/
+
+Web Application
+
+Static, Dynamic, Mobile, e-commerce, Content Management:
+
+https://www.geeksforgeeks.org/difference-between-static-and-dynamic-web-pages/
+
+Webservices:
+
+https://www.guru99.com/web-service-architecture.html
+
+Mobile Application
+
+
+
+6 Multitier application Architecture
+Multitier application : 
+https://www.guru99.com/n-tier-architecture-system-concepts-tips.html
+
+Presentation Tier - fontend - user interface
+Logic Layer - Application - Business Logic 
+Data tier: Backend - database
+
+7. Client and Server communication
+
+8. Static and Dynamic Applications
+
+9. Data Storage
+
+10. Monolithic, Microservice Applications and Difference between them
+https://www.atlassian.com/microservices/microservices-architecture/microservices-vs-monolith
+
+https://www.geeksforgeeks.org/monolithic-vs-microservices-architecture/
+
+11. 
+

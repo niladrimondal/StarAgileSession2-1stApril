@@ -205,8 +205,11 @@ install kubedm,kubectl(not required for worker node),kubelet
 https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl
+
 sudo curl -fsSLo /etc/apt/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+
 echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
 sudo apt-get update
 sudo apt-get install -y kubelet kubeadm kubectl
 sudo apt-mark hold kubelet kubeadm kubectl
@@ -234,6 +237,7 @@ sudo systemctl restart containerd
 #if required you can uprade the kubernetes version
 sudo apt-get upgrade kubelet kubeadm kubectl
 ++++++++++++++++++++++++++++++++++++++++++
+
 #initialize the k8's cluster
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
@@ -263,7 +267,48 @@ kubeadm join 172.31.21.114:6443 --token k4mulx.fap2kvzlr4734fjd \
 +++++++++++++++++
 #if you need to reset the cluster
 sudo kubeadm reset
++++++++++++++++++
 
+#Start using kubectl command
+kubectl get nodes
+
+#output
+amrutagosavi76a@ip-172-31-21-114:~$ kubectl get nodes
+NAME               STATUS     ROLES                  AGE     VERSION
+ip-172-31-21-114   NotReady   control-plane,master   6m49s   v1.23.2
+amrutagosavi76a@ip-172-31-21-114:~$ 
+
+#Install network componet 
+#canal
+#flannel
+#calico
+
+#Get the file from github and use the to install k8s network, we are going to use flannel
+https://github.com/flannel-io/flannel/blob/master/Documentation/kube-flannel.yml
+
+#Creat a file kube-flannel.yml
+nano kube-flannel.yml
+
+copy the content and paste the same
+
+#Now apply the kube-flannel.yml using kubectl command
+kubectl apply -f kube-flannel.yml
+
+############output########
+mrutagosavi76a@ip-172-31-21-114:~$ kubectl apply -f kube-flannel.yml
+namespace/kube-flannel created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+serviceaccount/flannel created
+configmap/kube-flannel-cfg created
+daemonset.apps/kube-flannel-ds created
+amrutagosavi76a@ip-172-31-21-114:~$ 
+############################
+#check the status of the node again now it should be ready
+amrutagosavi76a@ip-172-31-21-114:~$ kubectl get nodes
+NAME               STATUS   ROLES                  AGE   VERSION
+ip-172-31-21-114   Ready    control-plane,master   14m   v1.23.2
+amrutagosavi76a@ip-172-31-21-114:~$
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 EKS Installation eksctl tool
 

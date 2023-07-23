@@ -1,0 +1,119 @@
+Github, Jenkins
+https://aws.amazon.com/devops/
+Requirements: 
+Source code management(Github,SVN, Gitlab, Bitbucket)
+
+CI-CD tools(jenkins , github action, gitlab) AWS provided tools Azure provided tools.
+
+
+we are going to handle the code developed by Developer:
+checkout the code --> compiling -> build the code --> test the code--> Artifact(release version)-> Deploy to the environment
+
+Environment: Development, Test environment, Preprod environment, Production environment 
+Infracture as a Code : Terraform, ARM(Azure) Cloud Formation(AWS), pulumi
+Configuration Management tool: Ansible, Chef, Puppet, saltstack 
+
+What is the Technology Stack: Java , Angular , Python, Mysql, Sql
+
+Build tool: Maven, Flask, Gradle, ant
+
+Artifact repository: Nexus , Jfrog, Azure Artifact repository 
+
+Architecture: Monolithic, Microservices
+
+Containerization: Docker -> Docker Swarm -> K8s 
+
+AWS Devops Service:
+Code Commit : Source code git repository
+Code Build : Build and test code
+Code Deploy: Automate code deployments to maintain application uptime
+Code pipeline: Automate continuous delivery pipelines for fast and reliable updates
+
+Cloud formation : 
+Stack : EC2, RDS, S3, Lamda, EKS , redshift 
+ec2 provisioned 
+RDS provisioned 
+s3 eroor during provisioning 
+
+it will revert all the changes
+ec2 decommision  
+RDS decomission
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Azure:
+https://portal.azure.com/ : Azure cloud services
+Subscription:
+Owner
+Contributor
+reader
+Azure Storage account contributor
+
+Azure Devops:
+https://dev.azure.com/niladrismondal/niladrismondal/
+
+https://dev.azure.com/<oraganization>/<projectname>
+
+n number oraganization
+
+each Organization can have n number of projects
+
+Azure Devops Components:
+
+1. Overview
+	Summary
+	Dashboard
+	Wiki (equivalent Confluence page)
+2. Boards
+	work Item 
+	Backlog 
+	Sprint
+3. Repos
+    files
+    commit
+    pushes
+	branches
+	tags
+	pull request
+4. Pipeline
+    yon can create with two ways 1. Yaml approach 2. Classic editor
+5. Test Plans
+6. Artifacts
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Documentation : Confluence 
+Board: Jira, Rally, 
+Repos: Github, Gitlab 
+CICD: Jenkins, bamboo 
+Artifacts: Nexus , JFrog
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
